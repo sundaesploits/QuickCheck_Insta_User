@@ -24,6 +24,12 @@ if [[ -z $username ]]
 then
 	echo "use : checkinsta [username]"
 	exit 1
+else
+	if [[ $username == "-g" ]];then
+		cp ./checkinsta /bin/
+		echo -e "$GREEN [+] Made Tool Global, use checkinsta [username]"
+		exit 1
+	fi
 fi
 
 URL="https://www.instagram.com/$username/"
