@@ -5,3 +5,8 @@ a simple tool to quickly check data about an instagram user with username
 
     >> chmod +x checkinsta
     >> ./checkinsta
+
+
+# Make Globally accessible
+
+    >> ./checkinsta -g
