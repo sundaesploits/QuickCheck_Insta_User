@@ -1,0 +1,42 @@
+#!/bin/bash
+
+username=$1
+
+
+
+#colors
+GREEN="\e[32m"
+PURPLE="\e[35m"
+YELLOW="\e[33m"
+BLUE="\e[34m"
+CYAN="\e[36m"
+RED="\e[31m"
+RESET="\e[0m"
+
+echo -e "
+		$CYAN
+█▀▀ █ █ █▀▀ █▀▀ █▄▀ █ █▄ █ █▀ ▀█▀ ▄▀█$PURPLE
+█▄▄ █▀█ ██▄ █▄▄ █ █ █ █ ▀█ ▄█  █  █▀█ $GREEN
+Quick checking for instagram accounts
+		$RESET"
+
+if [[ -z $username ]]
+then
+	echo "use : checkinsta [username]"
+	exit 1
+fi
+
+URL="https://www.instagram.com/$username/"
+
+USER_AGENT="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" # fake useragent
+result=$(curl -s -L -A "$USER_AGENT" "$URL" | pup 'meta[property="og:description"] attr{content}')
+
+extractRegex="([0-9KM.]+)[[:space:]]Followers,?[[:space:]]?(([0-9KM.]+)[[:space:]]Following,?)?[[:space:]]?(([0-9KM.]+)[[:space:]]Posts)?.*from[[:space:]]([^[:space:]]+)[[:space:]]\(@([^)]+)\)"
+
+if [ -z "$result" ];then
+	echo -e "$RED [X]No DATA $RESET"
+else
+
+	echo "[+] Found ! :"
+	echo -e "$CYAN $result"
+fi
